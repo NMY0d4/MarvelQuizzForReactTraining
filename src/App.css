@@ -201,6 +201,7 @@ footer {
 
 /* ERROR PAGE */
 .quiz-bg {
+    height: 70vh;
     margin: 0;
     padding: 0;
     background-color: var(--white-color);
