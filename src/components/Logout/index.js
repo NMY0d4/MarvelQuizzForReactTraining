@@ -14,7 +14,7 @@ const Logout = () => {
                     console.log("Déconnexion");
                     setTimeout(() => {
                         navigate("/");
-                    }, 1500);
+                    }, 1000);
                 })
                 .catch((error) => {
                     console.error(error);
