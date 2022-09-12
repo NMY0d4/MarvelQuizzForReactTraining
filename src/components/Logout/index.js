@@ -11,7 +11,6 @@ const Logout = () => {
         if (checked) {
             signOut(auth)
                 .then(() => {
-                    console.log("Déconnexion");
                     setTimeout(() => {
                         navigate("/");
                     }, 1000);
