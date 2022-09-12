@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../Firebase/firebaseConfig";
 import Logout from "../Logout";
 import Quiz from "../Quizz";

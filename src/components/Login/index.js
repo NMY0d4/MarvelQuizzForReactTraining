@@ -75,6 +75,10 @@ const Login = () => {
                                 Nouveau sur marvel Quizz? Inscrivez-vous
                                 maintenant.
                             </Link>
+                            <br />
+                            <Link className="simpleLink" to="/forgetpassword">
+                                Mot de passe oublié? Récupérez-le ici.
+                            </Link>
                         </div>
                     </div>
                 </div>

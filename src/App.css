@@ -806,6 +806,14 @@ input:checked + .slider:before {
 }
 /* END MODAL */
 
+/* ajout forgetpass success class */
+.successForget {
+    border: 1px solid green !important;
+    background: darkgreen;
+    color: #fff !important;
+    text-transform: uppercase;
+}
+
 /* MEDIA QUERIES */
 @media screen and (max-width: 540px) {
     .container img {
