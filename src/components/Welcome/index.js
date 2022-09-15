@@ -23,7 +23,7 @@ const Welcome = () => {
         userSession &&
             getDoc(user(userSession.uid))
                 .then((snapshot) => {
-                    snapshot.exist && setUserData(snapshot.data());
+                    snapshot.exists && setUserData(snapshot.data());
                 })
                 .catch((err) => {
                     console.error(err);
