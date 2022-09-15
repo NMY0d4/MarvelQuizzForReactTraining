@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { QuizMarvel } from "../quizMarvel";
 import Levels from "../Levels";
 import ProgressBar from "../ProgressBar";
@@ -15,6 +17,7 @@ class Quiz extends Component {
         btnDisabled: true,
         userAnswer: null,
         score: 0,
+        showWelcomeMsg: true,
     };
 
     storedDataRef = React.createRef();
@@ -31,6 +34,23 @@ class Quiz extends Component {
             this.setState({ storedQuestions: newArray });
         } else {
             console.log("Pas assez de questions");
+        }
+    };
+
+    showWelcomeMsg = (pseudo) => {
+        if (this.state.showWelcomeMsg) {
+            this.setState({ showWelcomeMsg: false });
+
+            toast(`Bienvenue ${pseudo}, et bonne chance 🍀`, {
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                bodyClassName: "toastify-color-welcome",
+            });
         }
     };
 
@@ -53,6 +73,26 @@ class Quiz extends Component {
             this.setState((prevState) => ({
                 score: prevState.score + 1,
             }));
+
+            toast.success("Bravo +1 point 👏", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+            toast.error("Raté 0... 😭", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     };
 
@@ -76,6 +116,9 @@ class Quiz extends Component {
                 btnDisabled: true,
             });
         }
+
+        this.props.userData.pseudo &&
+            this.showWelcomeMsg(this.props.userData.pseudo);
     }
 
     submitAnswer = (selectedAnswer) => {
@@ -88,6 +131,7 @@ class Quiz extends Component {
 
         return (
             <div>
+                <ToastContainer />
                 <Levels />
                 <ProgressBar />
                 <h2>
