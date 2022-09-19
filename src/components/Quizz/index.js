@@ -127,10 +127,25 @@ class Quiz extends Component {
         this.setState({ userAnswer: selectedAnswer, btnDisabled: false });
     };
 
+    getPercentage = (maxQuest, ourScore) => (ourScore / maxQuest) * 100;
+
     gameOver = () => {
-        this.setState({
-            quizEnd: true,
-        });
+        const gradepercent = this.getPercentage(
+            this.state.maxQuestions,
+            this.state.score
+        );
+        if (gradepercent >= 80) {
+            this.setState({
+                quizLevel: this.state.quizLevel + 1,
+                percent: gradepercent,
+                quizEnd: true,
+            });
+        } else {
+            this.setState({
+                percent: gradepercent,
+                quizEnd: true,
+            });
+        }
     };
 
     //////////////////////////////////////////////////////////////////////
@@ -144,10 +159,21 @@ class Quiz extends Component {
             quizEnd,
             idQuestion,
             maxQuestions,
+            levelNames,
+            score,
+            quizLevel,
+            percent,
         } = this.state;
 
-        return !quizEnd ? (
-            <QuizOver ref={this.storedDataRef} />
+        return quizEnd ? (
+            <QuizOver
+                ref={this.storedDataRef}
+                levelNames={levelNames}
+                score={score}
+                maxQuestions={maxQuestions}
+                quizLevel={quizLevel}
+                percent={percent}
+            />
         ) : (
             <Fragment>
                 <ToastContainer />
