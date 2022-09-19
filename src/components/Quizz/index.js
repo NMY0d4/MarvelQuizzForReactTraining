@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { QuizMarvel } from "../quizMarvel";
 import Levels from "../Levels";
 import ProgressBar from "../ProgressBar";
+import QuizOver from "../QuizOver";
 
 class Quiz extends Component {
     state = {
@@ -18,6 +19,7 @@ class Quiz extends Component {
         userAnswer: null,
         score: 0,
         showWelcomeMsg: true,
+        quizEnd: false,
     };
 
     storedDataRef = React.createRef();
@@ -60,7 +62,7 @@ class Quiz extends Component {
 
     nextQuestion = () => {
         if (this.state.idQuestion === this.state.maxQuestions - 1) {
-            console.log("GameOVer");
+            this.gameOver();
         } else {
             this.setState((prevState) => ({
                 idQuestion: prevState.idQuestion + 1,
@@ -76,7 +78,7 @@ class Quiz extends Component {
 
             toast.success("Bravo +1 point 👏", {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -86,7 +88,7 @@ class Quiz extends Component {
         } else {
             toast.error("Raté 0... 😭", {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -125,12 +127,21 @@ class Quiz extends Component {
         this.setState({ userAnswer: selectedAnswer, btnDisabled: false });
     };
 
+    gameOver = () => {
+        this.setState({
+            quizEnd: true,
+        });
+    };
+
     render() {
         const { pseudo } = this.props.userData;
-        const { btnDisabled, options, question, userAnswer } = this.state;
+        const { btnDisabled, options, question, userAnswer, quizEnd } =
+            this.state;
 
-        return (
-            <div>
+        return quizEnd ? (
+            <QuizOver />
+        ) : (
+            <Fragment>
                 <ToastContainer />
                 <Levels />
                 <ProgressBar />
@@ -156,7 +167,7 @@ class Quiz extends Component {
                 >
                     Suivant
                 </button>
-            </div>
+            </Fragment>
         );
     }
 }
