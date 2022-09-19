@@ -146,8 +146,8 @@ class Quiz extends Component {
             maxQuestions,
         } = this.state;
 
-        return quizEnd ? (
-            <QuizOver />
+        return !quizEnd ? (
+            <QuizOver ref={this.storedDataRef} />
         ) : (
             <Fragment>
                 <ToastContainer />

@@ -2,8 +2,8 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <footer>
-            <div className="footer-container">
+        <footer className="footer-container">
+            <div className="footer">
                 <p>
                     Projet réalisé par Grégory Marini (Cours DonkeeGeek Udemy) -
                     learn React -2022

@@ -81,7 +81,6 @@ body {
     padding: 0;
     background-image: url(images/bg-noise-texture.png);
     background-repeat: repeat;
-    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -201,11 +200,11 @@ footer {
 
 /* ERROR PAGE */
 .quiz-bg {
-    height: 70vh;
     margin: 0;
     padding: 0;
     background-color: var(--white-color);
     display: flex;
+    flex-grow: 1;
     justify-content: center;
 }
 
