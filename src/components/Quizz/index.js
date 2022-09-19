@@ -43,7 +43,7 @@ class Quiz extends Component {
 
             toast(`Bienvenue ${pseudo}, et bonne chance 🍀`, {
                 position: "top-right",
-                autoClose: 2500,
+                autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -60,7 +60,7 @@ class Quiz extends Component {
 
     nextQuestion = () => {
         if (this.state.idQuestion === this.state.maxQuestions - 1) {
-            // End
+            console.log("GameOVer");
         } else {
             this.setState((prevState) => ({
                 idQuestion: prevState.idQuestion + 1,
@@ -134,9 +134,7 @@ class Quiz extends Component {
                 <ToastContainer />
                 <Levels />
                 <ProgressBar />
-                <h2>
-                    {question} {pseudo} répondez svp
-                </h2>
+                <h2>{question}</h2>
 
                 {/* Afficher les options */}
                 {options.map((option, index) => (
