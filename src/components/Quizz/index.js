@@ -133,10 +133,18 @@ class Quiz extends Component {
         });
     };
 
+    //////////////////////////////////////////////////////////////////////
     render() {
         const { pseudo } = this.props.userData;
-        const { btnDisabled, options, question, userAnswer, quizEnd } =
-            this.state;
+        const {
+            btnDisabled,
+            options,
+            question,
+            userAnswer,
+            quizEnd,
+            idQuestion,
+            maxQuestions,
+        } = this.state;
 
         return quizEnd ? (
             <QuizOver />
@@ -144,7 +152,10 @@ class Quiz extends Component {
             <Fragment>
                 <ToastContainer />
                 <Levels />
-                <ProgressBar />
+                <ProgressBar
+                    idQuestion={idQuestion}
+                    maxQuestions={maxQuestions}
+                />
                 <h2>{question}</h2>
 
                 {/* Afficher les options */}
@@ -165,7 +176,7 @@ class Quiz extends Component {
                     className="btnSubmit"
                     onClick={this.nextQuestion}
                 >
-                    Suivant
+                    {idQuestion < maxQuestions - 1 ? "suivant" : "terminer"}
                 </button>
             </Fragment>
         );
