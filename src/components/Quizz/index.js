@@ -66,7 +66,7 @@ class Quiz extends Component {
 
     nextQuestion = () => {
         if (this.state.idQuestion === this.state.maxQuestions - 1) {
-            this.gameOver();
+            this.setState({ quizEnd: true });
         } else {
             this.setState((prevState) => ({
                 idQuestion: prevState.idQuestion + 1,
@@ -115,6 +115,14 @@ class Quiz extends Component {
             });
         }
 
+        if (this.state.quizEnd !== prevState.quizEnd) {
+            const gradepercent = this.getPercentage(
+                this.state.maxQuestions,
+                this.state.score
+            );
+            this.gameOver(gradepercent);
+        }
+
         if (
             this.state.idQuestion !== prevState.idQuestion &&
             this.state.storedQuestions.length
@@ -139,22 +147,15 @@ class Quiz extends Component {
 
     getPercentage = (maxQuest, ourScore) => (ourScore / maxQuest) * 100;
 
-    gameOver = () => {
-        const gradepercent = this.getPercentage(
-            this.state.maxQuestions,
-            this.state.score
-        );
-
-        if (gradepercent >= 80) {
+    gameOver = (percent) => {
+        if (percent >= 80) {
             this.setState({
                 quizLevel: this.state.quizLevel + 1,
-                percent: gradepercent,
-                quizEnd: true,
+                percent,
             });
         } else {
             this.setState({
-                percent: gradepercent,
-                quizEnd: true,
+                percent,
             });
         }
     };
@@ -177,6 +178,7 @@ class Quiz extends Component {
             maxQuestions,
             levelNames,
             score,
+            percent,
             quizLevel,
         } = this.state;
 
@@ -185,6 +187,7 @@ class Quiz extends Component {
                 ref={this.storedDataRef}
                 levelNames={levelNames}
                 score={score}
+                percent={percent}
                 maxQuestions={maxQuestions}
                 quizLevel={quizLevel}
                 loadLevelQuestions={this.loadLevelQuestions}

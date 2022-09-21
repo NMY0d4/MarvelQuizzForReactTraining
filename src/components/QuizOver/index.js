@@ -1,10 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 const QuizOver = React.forwardRef((props, ref) => {
-    const { levelNames, score, maxQuestions, quizLevel, loadLevelQuestions } =
-        props;
+    const {
+        levelNames,
+        score,
+        maxQuestions,
+        quizLevel,
+        loadLevelQuestions,
+        percent,
+    } = props;
     const [asked, setAsked] = useState([]);
-    const percent = score * (100 / maxQuestions);
+    // const percent = score * (100 / maxQuestions);
 
     // console.log(asked);
 
