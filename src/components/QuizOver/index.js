@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { GiTrophyCup } from "react-icons/gi";
 
 const QuizOver = React.forwardRef((props, ref) => {
     const {
@@ -52,7 +53,8 @@ const QuizOver = React.forwardRef((props, ref) => {
                                     loadLevelQuestions(0);
                                 }}
                             >
-                                Bravo, vous êtes un expert
+                                <GiTrophyCup size="50px" /> Bravo, vous êtes un
+                                expert
                             </p>
                             <button className="btnResult gameOver">
                                 Accueil
