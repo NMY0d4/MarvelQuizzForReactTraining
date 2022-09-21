@@ -7,22 +7,26 @@ import ProgressBar from "../ProgressBar";
 import QuizOver from "../QuizOver";
 
 class Quiz extends Component {
-    state = {
-        levelNames: ["debutant", "confirme", "expert"],
-        quizLevel: 0,
-        maxQuestions: 10,
-        storedQuestions: [],
-        question: null,
-        options: [],
-        idQuestion: 0,
-        btnDisabled: true,
-        userAnswer: null,
-        score: 0,
-        showWelcomeMsg: true,
-        quizEnd: false,
-    };
+    constructor(props) {
+        super(props);
 
-    storedDataRef = React.createRef();
+        this.initialState = {
+            levelNames: ["debutant", "confirme", "expert"],
+            quizLevel: 0,
+            maxQuestions: 10,
+            storedQuestions: [],
+            question: null,
+            options: [],
+            idQuestion: 0,
+            btnDisabled: true,
+            userAnswer: null,
+            score: 0,
+            showWelcomeMsg: true,
+            quizEnd: false,
+        };
+        this.state = this.initialState;
+        this.storedDataRef = React.createRef();
+    }
 
     loadQuestions = (quizz) => {
         const fetchedArrayQuizz = QuizMarvel[0].quizz[quizz];
@@ -134,6 +138,7 @@ class Quiz extends Component {
             this.state.maxQuestions,
             this.state.score
         );
+
         if (gradepercent >= 80) {
             this.setState({
                 quizLevel: this.state.quizLevel + 1,
@@ -146,6 +151,11 @@ class Quiz extends Component {
                 quizEnd: true,
             });
         }
+    };
+
+    loadLevelQuestions = (param) => {
+        this.setState({ ...this.initialState, quizLevel: param });
+        this.loadQuestions(this.state.levelNames[param]);
     };
 
     //////////////////////////////////////////////////////////////////////
@@ -173,6 +183,7 @@ class Quiz extends Component {
                 maxQuestions={maxQuestions}
                 quizLevel={quizLevel}
                 percent={percent}
+                loadLevelQuestions={this.loadLevelQuestions}
             />
         ) : (
             <Fragment>
