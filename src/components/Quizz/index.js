@@ -195,7 +195,7 @@ class Quiz extends Component {
         ) : (
             <Fragment>
                 <ToastContainer />
-                <Levels />
+                <Levels levelNames={levelNames} quizLevel={quizLevel} />
                 <ProgressBar
                     idQuestion={idQuestion}
                     maxQuestions={maxQuestions}
