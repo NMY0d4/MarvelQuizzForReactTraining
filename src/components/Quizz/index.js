@@ -43,7 +43,7 @@ class Quiz extends Component {
         }
     };
 
-    showWelcomeMsg = (pseudo) => {
+    showToastMsg = (pseudo) => {
         if (this.state.showWelcomeMsg) {
             this.setState({ showWelcomeMsg: false });
 
@@ -103,7 +103,10 @@ class Quiz extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.storedQuestions !== prevState.storedQuestions) {
+        if (
+            this.state.storedQuestions !== prevState.storedQuestions &&
+            this.state.storedQuestions.length
+        ) {
             this.setState({
                 question:
                     this.state.storedQuestions[this.state.idQuestion].question,
@@ -112,7 +115,10 @@ class Quiz extends Component {
             });
         }
 
-        if (this.state.idQuestion !== prevState.idQuestion) {
+        if (
+            this.state.idQuestion !== prevState.idQuestion &&
+            this.state.storedQuestions.length
+        ) {
             this.setState({
                 question:
                     this.state.storedQuestions[this.state.idQuestion].question,
@@ -123,8 +129,8 @@ class Quiz extends Component {
             });
         }
 
-        this.props.userData.pseudo &&
-            this.showWelcomeMsg(this.props.userData.pseudo);
+        this.props.userData.pseudo !== prevProps.userData.pseudo &&
+            this.showToastMsg(this.props.userData.pseudo);
     }
 
     submitAnswer = (selectedAnswer) => {
@@ -160,7 +166,7 @@ class Quiz extends Component {
 
     //////////////////////////////////////////////////////////////////////
     render() {
-        const { pseudo } = this.props.userData;
+        // const { pseudo } = this.props.userData;
         const {
             btnDisabled,
             options,
@@ -172,7 +178,6 @@ class Quiz extends Component {
             levelNames,
             score,
             quizLevel,
-            percent,
         } = this.state;
 
         return quizEnd ? (
@@ -182,7 +187,6 @@ class Quiz extends Component {
                 score={score}
                 maxQuestions={maxQuestions}
                 quizLevel={quizLevel}
-                percent={percent}
                 loadLevelQuestions={this.loadLevelQuestions}
             />
         ) : (

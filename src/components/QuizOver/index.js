@@ -1,15 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 const QuizOver = React.forwardRef((props, ref) => {
-    const {
-        levelNames,
-        score,
-        maxQuestions,
-        quizLevel,
-        percent,
-        loadLevelQuestions,
-    } = props;
+    const { levelNames, score, maxQuestions, quizLevel, loadLevelQuestions } =
+        props;
     const [asked, setAsked] = useState([]);
+    const percent = score * (100 / maxQuestions);
+
     // console.log(asked);
 
     useEffect(() => {
@@ -17,7 +13,12 @@ const QuizOver = React.forwardRef((props, ref) => {
     }, [ref]);
 
     const okGrade = (maxQuestions / 10) * 8;
-    console.log(okGrade);
+
+    if (score < okGrade) {
+        setTimeout(() => {
+            loadLevelQuestions(quizLevel);
+        }, 3000);
+    }
 
     const decision =
         score >= okGrade ? (
@@ -47,7 +48,7 @@ const QuizOver = React.forwardRef((props, ref) => {
                             >
                                 Bravo, vous êtes un expert
                             </p>
-                            <button className="btnREsult gameOver">
+                            <button className="btnResult gameOver">
                                 Accueil
                             </button>
                         </Fragment>
@@ -84,9 +85,12 @@ const QuizOver = React.forwardRef((props, ref) => {
                 );
             })
         ) : (
-            <tr coldSpan="3">
-                <td style={{ textAlign: "center", color: "red" }}>
-                    Pas de réponses!
+            <tr>
+                <td colSpan="3">
+                    <div className="loader"></div>
+                    <p style={{ textAlign: "center", color: "red" }}>
+                        Pas de réponses!
+                    </p>
                 </td>
             </tr>
         );
