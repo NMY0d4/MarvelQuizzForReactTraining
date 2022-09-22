@@ -189,15 +189,18 @@ class Quiz extends Component {
         ));
 
         return quizEnd ? (
-            <QuizOver
-                ref={this.storedDataRef}
-                levelNames={levelNames}
-                score={score}
-                percent={percent}
-                maxQuestions={maxQuestions}
-                quizLevel={quizLevel}
-                loadLevelQuestions={this.loadLevelQuestions}
-            />
+            <Fragment>
+                <ToastContainer />
+                <QuizOver
+                    ref={this.storedDataRef}
+                    levelNames={levelNames}
+                    score={score}
+                    percent={percent}
+                    maxQuestions={maxQuestions}
+                    quizLevel={quizLevel}
+                    loadLevelQuestions={this.loadLevelQuestions}
+                />
+            </Fragment>
         ) : (
             <Fragment>
                 <ToastContainer />

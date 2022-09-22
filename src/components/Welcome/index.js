@@ -5,6 +5,7 @@ import { auth, user } from "../Firebase/firebaseConfig";
 import Logout from "../Logout";
 import Quiz from "../Quizz";
 import { getDoc } from "firebase/firestore";
+import Loader from "../Loader";
 
 const Welcome = () => {
     const [userSession, setUserSession] = useState(null);
@@ -35,10 +36,10 @@ const Welcome = () => {
     }, [userSession]);
 
     return userSession === null ? (
-        <Fragment>
-            <div className="loader"></div>
-            <p className="loaderText">Loading...</p>
-        </Fragment>
+        <Loader
+            loadingMsg={"Authentification..."}
+            styling={{ textAlign: "center", color: "#fff" }}
+        />
     ) : (
         <div className="quiz-bg">
             <div className="container">
