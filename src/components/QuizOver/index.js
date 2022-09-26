@@ -22,27 +22,48 @@ const QuizOver = React.forwardRef((props, ref) => {
     const [characterInfos, setCharacterInfos] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // const percent = score * (100 / maxQuestions);
-
-    // console.log(asked);
+    const checkDataAge = (date) => {
+        const today = Date.now();
+        const timeDiff = today - date;
+        const dayDiff = timeDiff / (1000 * 3600 * 24);
+        if (dayDiff >= 15) {
+            localStorage.clear();
+            localStorage.setItem("marvelStorageDate", Date.now());
+        }
+    };
 
     useEffect(() => {
         setAsked(ref.current);
+
+        if (localStorage.getItem("marvelStorageDate")) {
+            const date = localStorage.getItem("marvelStorageDate");
+            checkDataAge(date);
+        }
     }, [ref]);
 
     const showModal = (id) => {
         setOpenModal(true);
-        axios
-            .get(
-                `https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=${API_PUBLIC_KEY}&hash=${hash}`
-            )
-            .then((res) => {
-                setCharacterInfos(res.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+
+        if (localStorage.getItem(id)) {
+            setCharacterInfos(JSON.parse(localStorage.getItem(id)));
+            setLoading(false);
+        } else {
+            axios
+                .get(
+                    `https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=${API_PUBLIC_KEY}&hash=${hash}`
+                )
+                .then((res) => {
+                    setCharacterInfos(res.data);
+                    setLoading(false);
+
+                    localStorage.setItem(id, JSON.stringify(res.data));
+                    !localStorage.getItem("marvelStorageDate") &&
+                        localStorage.setItem("marvelStorageDate", Date.now());
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        }
     };
 
     const closeModal = () => {
