@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { GiTrophyCup } from "react-icons/gi";
+import { GiSlicedBread, GiTrophyCup } from "react-icons/gi";
 import Loader from "../Loader";
 import Modal from "../Modal";
 import axios from "axios";
@@ -69,6 +69,10 @@ const QuizOver = React.forwardRef((props, ref) => {
     const closeModal = () => {
         setOpenModal(false);
         setLoading(true);
+    };
+
+    const capitalizeFL = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     };
 
     const okGrade = (maxQuestions / 10) * 8;
@@ -160,13 +164,41 @@ const QuizOver = React.forwardRef((props, ref) => {
             </tr>
         );
 
+    const { name, thumbnail, description, urls, id } =
+        !loading && characterInfos.data.results[0];
+
     const resultInModal = !loading ? (
         <Fragment>
             <div className="modalHeader">
-                <h2>{characterInfos.data.results[0].name}</h2>
+                <h2>{name}</h2>
             </div>
             <div className="modalBody">
-                <h3>Titre 2</h3>
+                <div className="comicImage">
+                    <img
+                        src={`${thumbnail.path}.${thumbnail.extension}`}
+                        alt={name}
+                    />
+                    <p>{characterInfos.attributionText}</p>
+                </div>
+                <div className="comicDetails">
+                    <h3>Description</h3>
+                    {description ? (
+                        <p>{description}</p>
+                    ) : (
+                        <p>Pas de description disponible...</p>
+                    )}
+                    <h3>Plus d'infos</h3>
+                    {urls.map((url, index) => (
+                        <a
+                            href={url.url}
+                            key={index}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {capitalizeFL(url.type)}
+                        </a>
+                    ))}
+                </div>
             </div>
             <div className="modalFooter">
                 <button className="modalBtn" onClick={closeModal}>
